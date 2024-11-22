@@ -1,35 +1,70 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './global.css';
+import styles from './App.module.css'
+import Logo from './assets/Logo.svg';
+import Clipboard from './assets/Clipboard.svg';
+import { PlusCircle, Circle, Trash } from 'phosphor-react';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <header className={styles.header}>
+        <img src={Logo} alt="Logo da ToDo list" />
+      </header>
+
+      <main>
+        <form className={styles.addTask} action="">
+          <input type="text" placeholder="Adicionar uma nova tarefa" />
+
+          <button type="submit"> 
+            <span>Criar</span>
+            <PlusCircle size={16} />
+          </button>
+        </form>
+
+        <div className={styles.tasks}>
+          <div className={styles.tasks_header}>
+            <div>
+              <p>Tarefas criadas</p>
+              <span>5</span>
+            </div>
+            <div>
+              <p>Concluídas</p>
+              <span>2 de 5</span>
+            </div>
+          </div>
+
+          <div className={styles.empty_tasks}>
+            <img src={Clipboard} alt="" />
+
+            <p><strong>Você ainda não tem tarefas cadastradas</strong></p>
+            <p>Crie tarefas e organize seus itens a fazer</p>
+          </div>
+
+          <div className={styles.list_tasks}>
+            <Circle size={24} />
+            <p>
+              Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.
+            </p>
+            <Trash size={24} />
+          </div>
+
+          <div className={styles.list_tasks}>
+            <Circle size={24} />
+            <p>
+              Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.
+            </p>
+            <Trash size={24} />
+          </div>
+
+          <div className={styles.list_tasks}>
+            <Circle size={24} />
+            <p>
+              Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.
+            </p>
+            <Trash size={24} />
+          </div>
+        </div>
+      </main>
+    </div>
   )
 }
-
-export default App
