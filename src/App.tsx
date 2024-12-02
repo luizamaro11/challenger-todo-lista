@@ -1,10 +1,39 @@
 import './global.css';
 import styles from './App.module.css'
 import Logo from './assets/Logo.svg';
-import Clipboard from './assets/Clipboard.svg';
-import { PlusCircle, Circle, Trash } from 'phosphor-react';
+import { PlusCircle } from 'phosphor-react';
+import { Task } from './components/Task';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 export function App() {
+  const [tasks, setTasks] = useState([
+    {
+      key: 1,
+      check: false,
+      text: 'Dessenvolver meu portfólio',
+    }
+  ]);
+  const [newTaskText, setNewTaskText] = useState('');
+
+  const taskCompleted = tasks.filter(task => {
+    return  task.check === true;
+  });
+
+  function handleCreateNewTask(event: FormEvent) {
+    event.preventDefault();
+
+    setTasks([...tasks, {
+      key: tasks.length+1,
+      check: false,
+      text: newTaskText
+    }]);
+    setNewTaskText('');
+  }
+
+  function handleNewTaskChange(event: ChangeEvent<HTMLInputElement>) {
+    setNewTaskText(event.target.value);
+  }
+
   return (
     <div>
       <header className={styles.header}>
@@ -12,10 +41,15 @@ export function App() {
       </header>
 
       <main>
-        <form className={styles.addTask} action="">
-          <input type="text" placeholder="Adicionar uma nova tarefa" />
+        <form onSubmit={handleCreateNewTask} className={styles.addTask}>
+          <input 
+            type="text"
+            placeholder="Adicionar uma nova tarefa"
+            value={newTaskText}
+            onChange={handleNewTaskChange}
+          />
 
-          <button type="submit"> 
+          <button type="submit">
             <span>Criar</span>
             <PlusCircle size={16} />
           </button>
@@ -25,44 +59,18 @@ export function App() {
           <div className={styles.tasks_header}>
             <div>
               <p>Tarefas criadas</p>
-              <span>5</span>
+              <span>{tasks.length}</span>
             </div>
             <div>
               <p>Concluídas</p>
-              <span>2 de 5</span>
+              <span>{taskCompleted.length} de {tasks.length}</span>
             </div>
           </div>
 
-          <div className={styles.empty_tasks}>
-            <img src={Clipboard} alt="" />
+          {tasks.map(task => {
+            return <Task key={task.key} check={task.check} text={task.text} />
+          })}
 
-            <p><strong>Você ainda não tem tarefas cadastradas</strong></p>
-            <p>Crie tarefas e organize seus itens a fazer</p>
-          </div>
-
-          <div className={styles.list_tasks}>
-            <Circle size={24} />
-            <p>
-              Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.
-            </p>
-            <Trash size={24} />
-          </div>
-
-          <div className={styles.list_tasks}>
-            <Circle size={24} />
-            <p>
-              Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.
-            </p>
-            <Trash size={24} />
-          </div>
-
-          <div className={styles.list_tasks}>
-            <Circle size={24} />
-            <p>
-              Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.
-            </p>
-            <Trash size={24} />
-          </div>
         </div>
       </main>
     </div>
