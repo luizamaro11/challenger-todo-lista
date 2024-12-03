@@ -4,15 +4,16 @@ import Logo from './assets/Logo.svg';
 import { PlusCircle } from 'phosphor-react';
 import { Task } from './components/Task';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { Empty } from './components/Empty';
+
+export interface ITask {
+  id: number
+  check: boolean
+  text: string
+}
 
 export function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      check: false,
-      text: 'Dessenvolver meu portfólio',
-    }
-  ]);
+  const [tasks, setTasks] = useState<ITask[]>([]);
   const [newTaskText, setNewTaskText] = useState('');
 
   const taskCompleted = tasks.filter(task => {
@@ -53,7 +54,6 @@ export function App() {
   }
 
   return (
-    
     <div>
       <header className={styles.header}>
         <img src={Logo} alt="Logo da ToDo list" />
@@ -86,18 +86,24 @@ export function App() {
             </div>
           </div>
 
-          {tasks.map(task => {
-            return (
-              <Task 
-                key={task.id}
-                id={task.id}
-                check={task.check} 
-                text={task.text}
-                onChangeCheck={changeCheck}
-                onDeleteTask={deleteTask}
-              /> 
-            )
-          })}
+          {tasks.length > 0 ? (
+            <div>
+              {tasks.map(task => {
+                return (
+                  <Task 
+                    key={task.id}
+                    id={task.id}
+                    check={task.check} 
+                    text={task.text}
+                    onChangeCheck={changeCheck}
+                    onDeleteTask={deleteTask}
+                  /> 
+                )
+              })}
+            </div>
+          ) : (
+            <Empty />
+          )}
 
         </div>
       </main>

@@ -1,0 +1,16 @@
+.empty_tasks {
+    text-align: center;
+    padding: 1.5rem 4rem;
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    box-shadow: inset 0px 1px 0px var(--gray-400);
+}
+
+.empty_tasks img {
+    margin-bottom: 1rem;
+}
+
+.empty_tasks p {
+    color: var(--gray-300);
+    line-height: 1.4;
+}
