@@ -1,20 +1,23 @@
 import Clipboard from '../assets/Clipboard.svg';
 import { Trash } from 'phosphor-react';
 import styles from './Task.module.css';
-import { useState, MouseEvent } from 'react';
 import { IconCheckTask } from './IconCheckTask';
 
 interface Task {
+  id: number,
   check: boolean,
-  text: string
+  text: string,
+  onChangeCheck: (id: number) => void,
+  onDeleteTask: (id: number) => void
 }
 
-export function Task({ check, text }: Task) {
-  const [checkTask, setCheckTask] = useState(check);
-
+export function Task({ id, check, text, onChangeCheck, onDeleteTask }: Task) {
   function handleCheckTask() {
-    console.log('Click!');
-    setCheckTask(checkTask === false ? true : false);
+    onChangeCheck(id);
+  }
+
+  function handleDeleteTask() {
+    onDeleteTask(id);
   }
 
   return (
@@ -28,10 +31,10 @@ export function Task({ check, text }: Task) {
 
       <div className={styles.list_tasks}>
         <button onClick={handleCheckTask}>
-          <IconCheckTask check={checkTask} />
+          <IconCheckTask check={check} />
         </button>
         <p>{ text }</p>
-        <button>
+        <button onClick={handleDeleteTask}>
           <Trash size={24} />
         </button>
       </div>

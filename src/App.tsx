@@ -8,7 +8,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 export function App() {
   const [tasks, setTasks] = useState([
     {
-      key: 1,
+      id: 1,
       check: false,
       text: 'Dessenvolver meu portfólio',
     }
@@ -23,7 +23,7 @@ export function App() {
     event.preventDefault();
 
     setTasks([...tasks, {
-      key: tasks.length+1,
+      id: tasks.length+1,
       check: false,
       text: newTaskText
     }]);
@@ -34,7 +34,26 @@ export function App() {
     setNewTaskText(event.target.value);
   }
 
+  function changeCheck(id: number) {
+    return setTasks((prevTasks) => 
+      prevTasks.map((task) => 
+        task.id === id 
+          ? { ...task, check: !task.check }
+          : task
+      )
+    );
+  }
+
+  function deleteTask(id: number) {
+    const taskWithoutDeletedOne = tasks.filter(task => {
+      return task.id !== id;
+    });
+
+    setTasks(taskWithoutDeletedOne);
+  }
+
   return (
+    
     <div>
       <header className={styles.header}>
         <img src={Logo} alt="Logo da ToDo list" />
@@ -68,7 +87,16 @@ export function App() {
           </div>
 
           {tasks.map(task => {
-            return <Task key={task.key} check={task.check} text={task.text} />
+            return (
+              <Task 
+                key={task.id}
+                id={task.id}
+                check={task.check} 
+                text={task.text}
+                onChangeCheck={changeCheck}
+                onDeleteTask={deleteTask}
+              /> 
+            )
           })}
 
         </div>
