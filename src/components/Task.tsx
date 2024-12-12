@@ -22,10 +22,10 @@ export function Task({ id, check, text, onChangeCheck, onDeleteTask }: Task) {
   return (
     <div>
       <div className={styles.list_tasks}>
-        <button onClick={handleCheckTask}>
+        <button onClick={handleCheckTask} className={check === true ? styles.buttonChecked : ''}>
           <IconCheckTask check={check} />
         </button>
-        <p>{ text }</p>
+        <p className={check === true ? styles.checked : ''}>{ text }</p>
         <button onClick={handleDeleteTask}>
           <Trash size={24} />
         </button>

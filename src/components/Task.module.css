@@ -26,11 +26,20 @@
     color: var(--blue-dark);
 }
 
+.list_tasks .buttonChecked svg:hover path {
+    fill: var(--purple);
+}
+
 .list_tasks p {
     font-size: 0.875rem;
     line-height: 1.4;
     color: var(--gray-100);
-    width: 44vw;
+    width: 80vw;
+}
+
+.list_tasks .checked {
+    text-decoration: line-through;
+    color: var(--gray-300);
 }
 
 .list_tasks button:last-child {
